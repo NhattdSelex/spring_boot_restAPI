@@ -1,9 +1,14 @@
 package com.jttrinh.restfullapi.user;
 
+import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.UniqueElements;
+
 import java.time.LocalDate;
 
 public class User {
+
     private int id;
+    @NotEmpty(message = "name is not empty")
     private String name;
     private LocalDate dataBird;
 

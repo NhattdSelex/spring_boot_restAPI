@@ -2,6 +2,7 @@ package com.jttrinh.restfullapi.user;
 
 
 import com.jttrinh.restfullapi.exception.UserNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -34,14 +35,14 @@ public class UserResource {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<User> createdUser(@RequestBody User user){
+    public ResponseEntity<User> createdUser(@Valid @RequestBody User user){
         User newUser = userDAOService.save(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
 
     @DeleteMapping("/users/{id}")
-    public void removeUser(@PathVariable int id){
+    public void removeUser( @PathVariable int id){
         userDAOService.remove(id);
     }
 }
