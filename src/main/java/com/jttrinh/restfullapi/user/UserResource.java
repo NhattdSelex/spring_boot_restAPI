@@ -1,9 +1,8 @@
 package com.jttrinh.restfullapi.user;
 
 
-import com.jttrinh.restfullapi.exception.CustomizeResponseEntityExceptionHandler;
+import com.jttrinh.restfullapi.exception.UserNotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -39,5 +38,10 @@ public class UserResource {
         User newUser = userDAOService.save(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getId()).toUri();
         return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping("/users/{id}")
+    public void removeUser(@PathVariable int id){
+        userDAOService.remove(id);
     }
 }

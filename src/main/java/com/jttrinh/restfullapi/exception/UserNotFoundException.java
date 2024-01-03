@@ -1,4 +1,4 @@
-package com.jttrinh.restfullapi.user;
+package com.jttrinh.restfullapi.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
