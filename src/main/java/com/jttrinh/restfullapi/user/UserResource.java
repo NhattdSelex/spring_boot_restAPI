@@ -1,6 +1,7 @@
 package com.jttrinh.restfullapi.user;
 
 
+import com.jttrinh.restfullapi.exception.CustomizeResponseEntityExceptionHandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class UserResource {
 
         final User userValue = userDAOService.getOne(id);
         if(userValue == null){
-            throw  new UserNotFoundException("user not found");
+            throw  new UserNotFoundException("Hello not found user");
         }
 
         return userValue ;
