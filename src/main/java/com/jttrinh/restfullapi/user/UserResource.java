@@ -1,10 +1,12 @@
 package com.jttrinh.restfullapi.user;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -22,6 +24,19 @@ public class UserResource {
 
     @GetMapping(path = "users/{id}")
     public  User getUserById(@PathVariable int id){
-        return userDAOService.getOne(id);
+
+        final User userValue = userDAOService.getOne(id);
+        if(userValue == null){
+            throw  new UserNotFoundException("user not found");
+        }
+
+        return userValue ;
+    }
+
+    @PostMapping("/user")
+    public ResponseEntity<User> createdUser(@RequestBody User user){
+        User newUser = userDAOService.save(user);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getId()).toUri();
+        return ResponseEntity.created(location).build();
     }
 }

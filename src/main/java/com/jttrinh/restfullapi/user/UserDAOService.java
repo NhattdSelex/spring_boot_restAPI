@@ -10,12 +10,13 @@ import java.util.function.Predicate;
 @Component
 public class UserDAOService {
     private static List<User> users = new ArrayList<>();
+    private static int userCount = 0;
 
     static {
-        users.add(new User(0, "jt_trinh", LocalDate.now().minusYears(20)));
-        users.add(new User(1, "Trinh Nhat", LocalDate.now().minusYears(20)));
-        users.add(new User(2, "Nhat Trinh", LocalDate.now().minusYears(20)));
-        users.add(new User(3, "Trinh Duong Nhat", LocalDate.now().minusYears(20)));
+        users.add(new User(++userCount, "jt_trinh", LocalDate.now().minusYears(20)));
+        users.add(new User(++userCount, "Trinh Nhat", LocalDate.now().minusYears(20)));
+        users.add(new User(++userCount, "Nhat Trinh", LocalDate.now().minusYears(20)));
+        users.add(new User(++userCount, "Trinh Duong Nhat", LocalDate.now().minusYears(20)));
     }
 
     public List<User> finalAll(){
@@ -24,6 +25,12 @@ public class UserDAOService {
 
     public User getOne(int id) {
         Predicate<? super User> predicate = user -> user.getId() == id;
-        return users.stream().filter(predicate).findFirst().get();
+        return users.stream().filter(predicate).findFirst().orElse(null);
+    }
+
+    public User save(User user) {
+        user.setId(++userCount);
+        users.add(user);
+        return user;
     }
 }
